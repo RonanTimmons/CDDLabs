@@ -7,33 +7,50 @@
 #include <iostream>
 #include <thread>
 
-void taskOne(std::shared_ptr<Semaphore> theSemaphore){
-  std::cout <<"I ";
-  std::cout << "must ";
-  std::cout << "print ";
-  std::cout << "first"<<std::endl;
-  theSemaphore->Signal();
+void taskOne(std::shared_ptr<Semaphore> Sem1, std::shared_ptr<Semaphore> Sem2){
+  
+  std::cout << "A1"<<std::endl;
+
+  /*! wake up threadB */
+  Sem2->Signal();
+
+  /*! lock threadA from Sem1  */ 
+  Sem1->Wait();
+  
+  std::cout << "A2"<<std::endl;
+  /*! wake up threadB  */ 
+  Sem2->Signal();
+		   
 }
-void taskTwo(std::shared_ptr<Semaphore> theSemaphore){
-  theSemaphore->Wait();
-  std::cout <<"This ";
-  std::cout << "will ";
-  std::cout << "appear ";
-  std::cout << "second"<<std::endl;
+void taskTwo(std::shared_ptr<Semaphore> Sem1, std::shared_ptr<Semaphore> Sem2){
+  /*! lock threadB from Sem2 */
+  Sem2->Wait();
+
+  std::cout << "b1"<<std::endl;
+
+  /*! wake up threadA */
+  Sem1->Signal();
+
+  /*! lock threadB from Sem2 */
+  Sem2->Wait();
+  
+  std::cout << "b2"<<std::endl;
 }
 
 int main(void){
-  std::thread threadOne, threadTwo;
-  std::shared_ptr<Semaphore> sem( new Semaphore);
-  /**< Launch the threads  */
   
-  /* task two calls wait, decrements counter making it -1 and blocks itself */
-  threadOne=std::thread(taskTwo,sem);
-
-  /*taskOne called, carries out instructions, increments counter, wakes up threadOne */
-  threadTwo=std::thread(taskOne,sem);
+  std::thread threadA, threadB;
+  std::shared_ptr<Semaphore> sem1( new Semaphore);
+  std::shared_ptr<Semaphore> sem2( new Semaphore);
+  
+  /**< Launch the threads  */
+  /* taskTwo calls wait, decrements counter making it -1 and blocks itself */
+  threadA=std::thread(taskTwo,sem1, sem2);
+  threadB=std::thread(taskOne,sem1, sem2);
+  
+  
   std::cout << "Launched from the main\n";
-  threadOne.join();
-  threadTwo.join();
+  threadA.join();
+  threadB.join();
   return 0;
 }

@@ -1,8 +1,7 @@
-#Joseph Kehoe 13/9/2017
-#Second improved Makefile
-#Used to contain commands to compile projects
-#Equivalent(?) to a project file in VStudio -- only better!
-#See http://www.cs.colby.edu/maxwell/courses/tutorials/maketutor/ for info.
+#@author Ronan Timmons
+#@date 02/10/17
+#@version 1.0
+#See http://www.cs.colby.edu/maxwell/courses/tutorials/maketutor/ for info
 
 
 EXE = sigexe
@@ -14,3 +13,7 @@ HFILES = Semaphore.h
 
 ALL: $(CFILES) $(HFILES)
 	$(CC) $(CFLAGS) *.cpp -o sigexe
+
+#delete all .0 in project folder
+CLEAN:
+	rm *.o

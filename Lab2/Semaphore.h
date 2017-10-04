@@ -1,16 +1,17 @@
+/*!
+@author Ronan Timmons
+@date 02/10/17
+@version 1.0
+ */
+
 #include <mutex>
 #include <condition_variable>
 #include <chrono>
-/*! \class Semaphore
-    \brief A Semaphore Implementation
 
-   Uses C++11 features such as mutex and condition variables to implement Semaphore
-
-*/
 class Semaphore
 {
 private:
-    unsigned int m_uiCount; /*!< Holds the Semaphore count */
+    unsigned int m_uiCount;  /*!< Holds the Semaphore count */
     std::mutex m_mutex;
     std::condition_variable m_condition;
 

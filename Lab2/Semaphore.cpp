@@ -1,14 +1,14 @@
+/*!
+@author Ronan Timmons
+@date 02/10/17
+@version 1.0
+ */
+
 #include "Semaphore.h"
-/*! \class Semaphore
-    \brief A Semaphore Implementation
-
-   Uses C++11 features such as mutex and condition variables to implement Semaphore
-
+/*! class Semaphore
+    A brief Semaphore Implementation
+    Uses C++11 features such as mutex and condition variables to implement Semaphore
 */
-
-
-
-
 void Semaphore::Wait()
 {
       std::unique_lock< std::mutex > lock(m_mutex);
