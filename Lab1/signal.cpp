@@ -26,7 +26,10 @@ int main(void){
   std::thread threadOne, threadTwo;
   std::shared_ptr<Semaphore> sem( new Semaphore);
   /**< Launch the threads  */
+  /* taskTwo calls wait, decrements counter making it -1 and blocks itself */
   threadOne=std::thread(taskTwo,sem);
+
+  /*taskOne called, carries out instructions, increments counter, wakes up threadOne */
   threadTwo=std::thread(taskOne,sem);
   std::cout << "Launched from the main\n";
   threadOne.join();
