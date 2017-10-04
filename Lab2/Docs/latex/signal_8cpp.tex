@@ -1,0 +1,95 @@
+\hypertarget{signal_8cpp}{}\section{signal.\+cpp File Reference}
+\label{signal_8cpp}\index{signal.\+cpp@{signal.\+cpp}}
+{\ttfamily \#include \char`\"{}Semaphore.\+h\char`\"{}}\\*
+{\ttfamily \#include $<$iostream$>$}\\*
+{\ttfamily \#include $<$thread$>$}\\*
+Include dependency graph for signal.\+cpp\+:
+% FIG 0
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{signal_8cpp_a2696073bbedb6b55e6a52d2180c2a9b3}{task\+One} (std\+::shared\+\_\+ptr$<$ \hyperlink{classSemaphore}{Semaphore} $>$ the\+Semaphore)
+\item 
+void \hyperlink{signal_8cpp_ae4ea9570be601d182fa473c7ca431852}{task\+Two} (std\+::shared\+\_\+ptr$<$ \hyperlink{classSemaphore}{Semaphore} $>$ the\+Semaphore)
+\item 
+int \hyperlink{signal_8cpp_a840291bc02cba5474a4cb46a9b9566fe}{main} (void)
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\index{signal.\+cpp@{signal.\+cpp}!main@{main}}
+\index{main@{main}!signal.\+cpp@{signal.\+cpp}}
+\subsubsection[{\texorpdfstring{main(void)}{main(void)}}]{\setlength{\rightskip}{0pt plus 5cm}int main (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{signal_8cpp_a840291bc02cba5474a4cb46a9b9566fe}{}\label{signal_8cpp_a840291bc02cba5474a4cb46a9b9566fe}
+$<$ Launch the threads 
+
+Definition at line 25 of file signal.\+cpp.
+
+
+\begin{DoxyCode}
+25               \{
+26   std::thread threadOne, threadTwo;
+27   std::shared\_ptr<Semaphore> sem( \textcolor{keyword}{new} \hyperlink{classSemaphore}{Semaphore});\textcolor{comment}{}
+28 \textcolor{comment}{  /**< Launch the threads  */}
+29   threadOne=std::thread(\hyperlink{signal_8cpp_ae4ea9570be601d182fa473c7ca431852}{taskTwo},sem);
+30   threadTwo=std::thread(\hyperlink{signal_8cpp_a2696073bbedb6b55e6a52d2180c2a9b3}{taskOne},sem);
+31   std::cout << \textcolor{stringliteral}{"Launched from the main\(\backslash\)n"};
+32   threadOne.join();
+33   threadTwo.join();
+34   \textcolor{keywordflow}{return} 0;
+35 \}
+\end{DoxyCode}
+\index{signal.\+cpp@{signal.\+cpp}!task\+One@{task\+One}}
+\index{task\+One@{task\+One}!signal.\+cpp@{signal.\+cpp}}
+\subsubsection[{\texorpdfstring{task\+One(std\+::shared\+\_\+ptr$<$ Semaphore $>$ the\+Semaphore)}{taskOne(std::shared_ptr< Semaphore > theSemaphore)}}]{\setlength{\rightskip}{0pt plus 5cm}void task\+One (
+\begin{DoxyParamCaption}
+\item[{std\+::shared\+\_\+ptr$<$ {\bf Semaphore} $>$}]{the\+Semaphore}
+\end{DoxyParamCaption}
+)}\hypertarget{signal_8cpp_a2696073bbedb6b55e6a52d2180c2a9b3}{}\label{signal_8cpp_a2696073bbedb6b55e6a52d2180c2a9b3}
+\begin{DoxyAuthor}{Author}
+Ronan Timmons 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+02/10/17 
+\end{DoxyDate}
+\begin{DoxyVersion}{Version}
+1.\+0 
+\end{DoxyVersion}
+
+
+Definition at line 10 of file signal.\+cpp.
+
+
+\begin{DoxyCode}
+10                                                    \{
+11   std::cout <<\textcolor{stringliteral}{"I "};
+12   std::cout << \textcolor{stringliteral}{"must "};
+13   std::cout << \textcolor{stringliteral}{"print "};
+14   std::cout << \textcolor{stringliteral}{"first"}<<std::endl;
+15   theSemaphore->Signal();
+16 \}
+\end{DoxyCode}
+\index{signal.\+cpp@{signal.\+cpp}!task\+Two@{task\+Two}}
+\index{task\+Two@{task\+Two}!signal.\+cpp@{signal.\+cpp}}
+\subsubsection[{\texorpdfstring{task\+Two(std\+::shared\+\_\+ptr$<$ Semaphore $>$ the\+Semaphore)}{taskTwo(std::shared_ptr< Semaphore > theSemaphore)}}]{\setlength{\rightskip}{0pt plus 5cm}void task\+Two (
+\begin{DoxyParamCaption}
+\item[{std\+::shared\+\_\+ptr$<$ {\bf Semaphore} $>$}]{the\+Semaphore}
+\end{DoxyParamCaption}
+)}\hypertarget{signal_8cpp_ae4ea9570be601d182fa473c7ca431852}{}\label{signal_8cpp_ae4ea9570be601d182fa473c7ca431852}
+
+
+Definition at line 17 of file signal.\+cpp.
+
+
+\begin{DoxyCode}
+17                                                    \{
+18   theSemaphore->Wait();
+19   std::cout <<\textcolor{stringliteral}{"This "};
+20   std::cout << \textcolor{stringliteral}{"will "};
+21   std::cout << \textcolor{stringliteral}{"appear "};
+22   std::cout << \textcolor{stringliteral}{"second"}<<std::endl;
+23 \}
+\end{DoxyCode}
