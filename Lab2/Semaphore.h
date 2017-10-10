@@ -1,7 +1,8 @@
 /*!
-@author Ronan Timmons
-@date 02/10/17
-@version 1.0
+     @author: Ronan Timmons
+       @date: 02/10/17
+    @version: 0.9
+@lastUpdated: 10/10/17
  */
 
 #include <mutex>

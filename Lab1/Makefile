@@ -1,19 +1,21 @@
-#@author Ronan Timmons
-#@date 02/10/17
-#@version 1.0
-#See http://www.cs.colby.edu/maxwell/courses/tutorials/maketutor/ for info
-
+     #@author: Ronan Timmons
+       #@date: 02/10/17
+    #@version: 0.9
+#@lastUpdated: 10/10/17
 
 EXE = sigexe
 CC = g++
-CFLAGS = -std=c++11 -pthread
+CFLAGS = -std=c++11 -pthread -I.
 
-CFILES = signal.cpp Semaphore.cpp
-HFILES = Semaphore.h
+#each .o file needs a cpp file of same name
+%.o: %.cpp
+	$(CC) -c -o $@ $< $(CFLAGS)
 
-ALL: $(CFILES) $(HFILES)
-	$(CC) $(CFLAGS) *.cpp -o sigexe
+ALL :signal.o Semaphore.o
+	$(CC) $(CFLAGS) signal.cpp Semaphore.cpp -o $(EXE)
 
-#delete all .0 in project folder
+#delete all .o files
 CLEAN:
-	rm *.o
+	rm*.o
+
+
