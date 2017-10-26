@@ -1,0 +1,62 @@
+/*! 
+      @author: Ronan Timmons
+@date created: 20/10/17
+     @version: 0.9
+ @lastUpdated: 24/10/17
+     @purpose: demonsrate reuseable barrier
+ */
+
+#include "Semaphore.h"
+#include <iostream>
+#include <thread>
+#include <string>
+#include <vector>
+
+int numT = 10;
+int counter = 0;
+
+void funcOne(std::shared_ptr<Semaphore> mutex, std::shared_ptr<Semaphore> bar1, std::shared_ptr<Semaphore> bar2, int tNum) {
+
+  /*! atomic action on counter */
+  mutex->Wait();
+  counter++;
+  if (counter == numT) {
+     bar2-> Wait();
+     bar1-> Signal();
+  }
+
+  /*bar1 rendezvous */
+  mutex->Signal();
+  bar1->Wait();
+  std::cout << tNum <<  "meet here before doing important stuff lads" <<std::endl;
+  bar1->Signal();
+  mutex->Wait();
+  counter--;
+
+  if(counter == 0) {
+    bar1->Wait();
+    bar2->Signal();
+  }
+  mutex->Signal();
+  bar2->Wait();
+  bar2->Signal();
+  std::cout << tNum << "important stuff done, now have a breather " <<std::endl;
+  
+}
+
+int main(void) {
+  
+  std::shared_ptr<Semaphore> bar1(new Semaphore(0));
+  std::shared_ptr<Semaphore> bar2(new Semaphore(1));
+  std::thread tArray[numT];
+  std::shared_ptr<Semaphore> mutex(new Semaphore(1));
+  
+  for (int i = 0; i < numT; i++) {
+    tArray[i] = std::thread(funcOne,mutex,bar1,bar2,i);
+  }
+  
+  for (int i = 0; i < numT; i++) {
+    tArray[i].join();
+  }
+  return 0;
+}

@@ -3,10 +3,10 @@
     #@version: 0.9
 #@lastUpdated: 23/10/17
 
-EXE = mutualexe
+EXE = barrierexe
 CC = g++
 HFILES = Semaphore.h
-CPPFILES = Mutual.cpp Semaphore.cpp
+CPPFILES = Barrier.cpp Semaphore.cpp
 CFLAGS = -std=c++11 -pthread -Wall -I. 
 
 DEBUG: DEBUGFLAGS = -g -O0 
